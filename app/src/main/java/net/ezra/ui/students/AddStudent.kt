@@ -127,7 +127,7 @@ fun AddStudents(navController: NavHostController) {
 
                             var photoUrl: Uri? by remember { mutableStateOf(null) }
                             val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-                                photoUri = uri
+                                photoUrl = uri
                             }
 
                             var studentName by rememberSaveable {
@@ -153,7 +153,7 @@ fun AddStudents(navController: NavHostController) {
 
 
                             OutlinedTextField(
-                                value = studentNamme,
+                                value = studentName,
                                 onValueChange = { studentName = it },
                                 label = { Text(text = "Name") },
                                 modifier = Modifier
@@ -201,12 +201,12 @@ fun AddStudents(navController: NavHostController) {
 
 
 
-                            if (photoUri != null) {
+                            if (photoUrl != null) {
                                 //Use Coil to display the selected image
                                 val painter = rememberAsyncImagePainter(
                                     ImageRequest
                                         .Builder(LocalContext.current)
-                                        .data(data = photoUri)
+                                        .data(data = photoUrl)
                                         .build()
                                 )
 
@@ -241,30 +241,27 @@ fun AddStudents(navController: NavHostController) {
 
                             OutlinedButton(onClick = {
 
-                                if (photoUri != null) {
+                                if (photoUrl != null) {
 
                                     progressDialog = ProgressDialog(context)
                                     progressDialog?.setMessage("Uploading data...")
-                                    progressDilalog?.setCancelable(false)
+                                    progressDialog?.setCancelable(false)
                                     progressDialog?.show()
 
-                                    photoUri?.let {
+                                    photoUrl?.let {
 
                                         uploadImageToFirebaseStorage(
                                             it,
                                             studentName,
                                             studentClass,
-                                            studentEmail,
-
-
-                                        )
+                                            studentEmail, location)
 
                                         studentName = ""
                                         studentClass = ""
                                         studentEmail = ""
                                         location = ""
                                         phone = ""
-                                        photoUri = null
+                                        photoUrl = null
 
                                     }
                                 } else if (studentClass == ""){

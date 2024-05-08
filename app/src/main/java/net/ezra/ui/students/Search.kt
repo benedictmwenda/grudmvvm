@@ -19,7 +19,6 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
